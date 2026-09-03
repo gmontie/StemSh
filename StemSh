@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+
+# Include path to modules Library
+import platform
+Platform = platform.system()
+
+import sys
+if ('CYGWIN_NT' in Platform): 
+    sys.path.append('/usr/local/Lib/Python')
+elif ('Windows' in Platform):
+    sys.path.append("C:\\Lib\\Python")
+elif ('Linux' in Platform):
+    sys.path.append('/usr/local/Lib/Python')
+
+# Include path to modules Library
+from ExecUnit import ExecuteUnit
+from CmdHlp import Help
+
+# ===============================================================================================
+# MetAdATa
+# ===============================================================================================
+__author__ = "Greg Montgomery"
+__version__ = "2.0.0"
+__status__ = "Development"
+
+# =================================================================================================
+# Main
+# =================================================================================================
+def main():
+    Shell=ExecuteUnit()
+    Shell.ProcessInput()
+
+# =================================================================================================
+if __name__ == '__main__':
+    main()
