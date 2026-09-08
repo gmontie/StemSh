@@ -33,14 +33,16 @@ from CmdHlp import Help # type: ignore
 from AST import AST # type: ignore
 from SlyLexer import Tokenize # type: ignore
 from SlyParse import theParser # type: ignore
-from ExtentionUnit import ExtentionUnit # type: ignore
+from ExtensionUnit import ExtensionUnit # type: ignore
 
 from FileSys import FileSys # type: ignore
 from MathOps import MathOps # type: ignore
 
-# ===============================================================================================
-# MetAdATa
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "2.0.0"
 __status__ = "Development"
@@ -70,23 +72,27 @@ class ExecuteUnit:
         self.lineCount = 0
         self.ExtDir = {}
         self.Programed = {}
+        self.Symbolic={}
         self.Help=Help()
-        self.Extentions=ExtentionUnit()
-        self.Vars = Vars()        
+        self.Extensions=ExtensionUnit()
+        self.Vars = Vars()
         self.Tokenizer = Tokenize()
-        self.Parser = theParser(Vars=self.Vars, args=Args)
+        #Args['Symbolic']=self.Symbolic
+        self.Symbolic={}
+        self.Parser = theParser(Vars=self.Vars, args=Args, Symbolic=self.Symbolic)
         self.Cmds={}
+        self.Sym={}
         self.Ops={
                'BUILTIN':self.listBuiltIn,
                'EXIT':self.Exit,
                'NOW':self.Now,
                'TIME_NOW':self.TimeNow,
                "LIST_VARS":self.Vars.List,
-               'LIST_EXTENTIONS':self.Extentions.ListExtentions,
+               'LIST_EXTENTIONS':self.Extensions.ListExtensions,
                'LIST':self.programList,
                'LoadProgram':self.LoadProgram,
                'SaveProgram':self.SaveProgram,
-               'LoadExtention':self.LoadExtention,
+               'LoadExtension':self.LoadExtension,
                'LoadVars':self.LoadVars,
                'RUN':self.SetMode,
                'REN':self.ReNumber,
@@ -96,15 +102,15 @@ class ExecuteUnit:
                '?':self.Help.Usage
         }
 
-        self.ExtDir[ "BuiltIn" ] = self.Extentions.LoadExtention("BuiltIn", self.Ops)
+        self.ExtDir[ "BuiltIn" ] = self.Extensions.LoadExtension("BuiltIn", self.Ops)
         self.Fs = FileSys()
-        self.ExtDir[ self.Fs.Name ] = self.Extentions.LoadExtention(self.Fs.Name, self.Fs.Table)
+        self.ExtDir[ self.Fs.Name ] = self.Extensions.LoadExtension(self.Fs.Name, self.Fs.Table)
         self.MathOps = MathOps()
-        self.ExtDir[ self.MathOps.Name ] = self.Extentions.LoadExtention(self.MathOps.Name, self.MathOps.Table)
+        self.ExtDir[ self.MathOps.Name ] = self.Extensions.LoadExtension(self.MathOps.Name, self.MathOps.Table)
 
-        self.Extentions.Loaded=self.ExtDir
+        self.Extensions.Loaded=self.ExtDir
         self.ExtKeys = self.ExtDir.keys()
-        self.AST = AST(Vars=self.Vars, Value=self.Extentions)
+        self.AST = AST(Vars=self.Vars, Value=self.Extensions)
 
         print(sys.version)
         #print(sys.version_info)
@@ -172,8 +178,8 @@ class ExecuteUnit:
                 if(type(aCmd).__name__ == 'tuple'):
                     if(aCmd[0] == 'BuiltIn'):
                         args = aCmd[2:] # This could be args = aCmd[2:], but leaving it along 
-                        Extention = self.Extentions.Which(aCmd[1]) # Lookup
-                        self.ExtDir[ Extention ][aCmd[1]](args)
+                        Extension = self.Extensions.Which(aCmd[1]) # Lookup
+                        self.ExtDir[ Extension ][aCmd[1]](args)
                     elif(aCmd[0] == 'BTree'):
                         Rtn = self.AST.Walk(aCmd[1])
                         if self.Parser.OutPut and Rtn:
@@ -336,18 +342,18 @@ class ExecuteUnit:
         #     print("No program Lines to save")
 
     #*****************************************************************************
-    # Parser --> 'LoadExtention':self.LoadExtention,
+    # Parser --> 'LoadExtension':self.LoadExtension,
     #*****************************************************************************
-    def LoadExtention(self, Args):
+    def LoadExtension(self, Args):
         ExtName = Args[0]        
-        theExtention = importlib.import_module(ExtName)
-        importlib.reload(theExtention)
-        ExtInstance = theExtention.CmdPi()
+        theExtension = importlib.import_module(ExtName)
+        importlib.reload(theExtension)
+        ExtInstance = theExtension.CmdPi()
 
         # Create an instance of the extension class so @property access returns values
         ExtInstance.Print('This is a test to see this work')
         
-        cprint(RED,"Module Name: ",WHITE, theExtention.__name__)
+        cprint(RED,"Module Name: ",WHITE, theExtension.__name__)
         # Use instance properties, not class descriptors
         PinConfig = ExtInstance.PinConfiguations
         print(PinConfig)
@@ -361,10 +367,10 @@ class ExecuteUnit:
         value = ExtInstance.Implemented
         print(value)
 
-        self.ExtDir[ ExtInstance.Name ] = self.Extentions.LoadExtention(ExtInstance.Name, ExtInstance.Table)
-        self.Extentions.Loaded=self.ExtDir
+        self.ExtDir[ ExtInstance.Name ] = self.Extensions.LoadExtension(ExtInstance.Name, ExtInstance.Table)
+        self.Extensions.Loaded=self.ExtDir
         self.ExtKeys = self.ExtDir.keys()
-        self.AST = AST(Vars=self.Vars, Value=self.Extentions)
+        self.AST = AST(Vars=self.Vars, Value=self.Extensions)
         print("  ")
 
     #*****************************************************************************
