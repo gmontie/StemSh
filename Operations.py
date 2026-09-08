@@ -24,9 +24,6 @@ from math import comb
 from math import perm
 import math as math
 
-#from COLORS import WHITE, RED, YELLOW, BOLD, BLUE, GREEN, CYAN, MAGENTA, BLACK   # type: ignore
-#from Colorizer import Colorizer# type: ignore
-
 # ===============================================================================================
 # MEtADAtA
 # ===============================================================================================
@@ -41,9 +38,6 @@ __status__ = "Development"
           
 ============================================================================
 """
-
-#cprint = Colorizer().cprint
-#addStr = Colorizer().addStr
 
 #*****************************************************************************
 # The Execute the actions encoded by the Binary Tree

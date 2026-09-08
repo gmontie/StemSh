@@ -1,42 +1,31 @@
 #!/usr/bin/python3
-
-# Include path to modules Library
-import os
+import platform
 import sys
-# Development location for Python Modules
-sys.path.append('/usr/local/shares/Environment/Lib/Python')
-sys.path.append('/usr/local/shares/Environment/Lib/Python/GUI')
-sys.path.append('/usr/local/shares/Environment/Lib/Python/Phy')
-sys.path.append('/usr/local/shares/Environment/Lib/Python/Zigbee')
 
-# User implementation location for Python Modules
-sys.path.append('/usr/local/lib/Python')
-sys.path.append('/usr/local/Lib/Python/GUI')
-sys.path.append('/usr/local/lib/Python/Phy')
-sys.path.append('/usr/local/lib/Python/Zigbee')
+Platform = platform.system()
+if ('CYGWIN_NT' in Platform):  # type: ignore
+    sys.path.append('/usr/local/Lib/Python')
+elif ('Windows' in Platform):  # type: ignore
+    sys.path.append("C:\\Users\\greg.montgomery\\Development\\Lib\\Python")
+elif ('Linux' in Platform):  # type: ignore
+    sys.path.append('/usr/local/Lib/Python')
 
+import os
 import readline
-import rlcompleter 
 import atexit 
 import code
 import termios
 
-from colorama import init
-from colorama import Fore, Back, Style
+# Colorizer to colorize output
+from Colorizer import Colorizer # type: ignore
+from COLORS import BOLD, BLACK, GREEN, RED, BLUE, YELLOW, WHITE, MAGENTA, CYAN, RESET # type: ignore
 
-PRMT='\r\n'
-GREEN=Fore.GREEN
-YELLOW=Fore.YELLOW
-WHITE=Fore.WHITE
-RED=Fore.RED
-BLUE=Fore.BLUE
-MAGENTA=Fore.MAGENTA
-CYAN=Fore.CYAN
-BLACK=Fore.BLACK
+cprint = Colorizer().cprint
+addStr = Colorizer().addStr
 
 class KeyboardPrompt(code.InteractiveConsole):
-   def __init__(self, Prmt, pColor=None, local=None, filename="<console>", HistFile=os.path.expanduser("~/.zio_history")):
-      init(autoreset=True)
+   def __init__(self, Prmt, pColor=None, filename="<console>", HistFile=os.path.expanduser("~/.history")):
+      #init(autoreset=True)
       if pColor != None:
          Color=pColor.upper()
          if Color=='RED':

@@ -20,11 +20,13 @@ from COLORS import BOLD, GREEN, RED, BLUE, YELLOW, WHITE, RESET # type: ignore
 from Colorizer import Colorizer # type: ignore
 
 # Inport the Extention class
-from Extentions import Extention
+from Extensions import Extension
 
-# ===============================================================================================
-# MetAdATa
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "2.0.0"
 __status__ = "Development"
@@ -35,7 +37,7 @@ addStr = Colorizer().addStr
 #*****************************************************************************
 # FileSys Extention
 #*****************************************************************************
-class FileSys(Extention):
+class FileSys(Extension):
     def __init__(cls, 
                  Name="Operations", 
                  Version=__version__, 

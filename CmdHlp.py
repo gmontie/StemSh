@@ -23,9 +23,11 @@ from COLORS import RED, GREEN, YELLOW, WHITE # type: ignore
 # =================================================================================================
 PRMT='\r\n'
 
-# ===============================================================================================
-# MEtADAtA
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "1.0.0"
 __status__ = "Development"
@@ -41,62 +43,51 @@ __status__ = "Development"
 HelpLines= \
 [  ' ',
    YELLOW + '---------------------------------------------------------------------------', 
-   'wait <' + GREEN + 'time' + WHITE + '>                              ' + \
-      RED + '# Delay <' + GREEN + 'time' + RED + '> before executing the ',
-   '                                                            ',
-   '<' + GREEN + 'var' + WHITE +'> = <' + GREEN + 'value' + WHITE +\
-      '>                          ' + RED + '# Set variable <' + GREEN +\
-      'var' + RED + '> to <' + GREEN + 'value' + RED + '>',
-   '<' + GREEN + 'list vars' + WHITE + '>   ' + RED +\
-      '                           # list all '+ GREEN + 'variables' + RED + ' in memory',
-   '<' + GREEN + 'save' + WHITE +'> <'+YELLOW+'Name'+ WHITE+'><'+GREEN+'.'+WHITE+'><'+YELLOW+\
-      'Extension' + WHITE + '>              ' + \
-      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a',
-   '                                         ' + RED + '# ' + YELLOW + 'File Name' + RED + ' that all variables in memory will be saved to',
+   '<' + GREEN + 'program save' + WHITE +'> <'+YELLOW+'Name'+ WHITE+'><' + GREEN + '.' + WHITE + '><' + YELLOW + \
+      'Extension' + WHITE+ '>      ' + \
+      RED+'# Where '+YELLOW+'Name'+GREEN+'.' + YELLOW + 'Extension' + RED + ' is the ' + YELLOW + 'File Name' + RED + ' that program in memory will be saved to',
+   '<' + GREEN + 'program load' + WHITE +'> <' + YELLOW + 'Name' + WHITE + '><' + GREEN + '.' + WHITE + '><' + YELLOW + \
+      'Extension' + WHITE+ '>      '+\
+      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a ' + YELLOW + 'File Name' + RED + ' that program code will be loaded from',
    '  ',
-   '<' + GREEN + 'load' + WHITE +'> <'+YELLOW+'Name'+ WHITE+'><'+GREEN+'.'+WHITE+'><'+YELLOW+\
+   '<' + GREEN + 'save' + WHITE +'> <' + YELLOW + 'Name' + WHITE + '><' + GREEN + '.' + WHITE + '><' + YELLOW + \
       'Extension' + WHITE + '>              ' + \
-      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a' + YELLOW + 'File Name' + RED + ' that variables will be loaded from',   
+      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a ' + YELLOW + \
+          'File Name' + RED + ' that all variables in memory will be saved to',
+   '<' + GREEN + 'load' + WHITE + '> <' + YELLOW + 'Name' + WHITE + '><' + GREEN + '.' + WHITE + '><' + YELLOW + \
+      'Extension' + WHITE + '>              ' + \
+      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a ' + YELLOW + 'File Name' + RED + ' that variables will be loaded from',   
    '                                                            ',
    '<' + YELLOW + 'NUMBER' + WHITE + '>  {' + GREEN + 'any command' + WHITE + '}' + \
       '                  ' + \
       RED + '# Is a how a ' + YELLOW +'line' + RED + ' of ' + GREEN + 'programming code' + RED+' is entered',
-   '  ',  
+   '                                                            ',
    '<' + GREEN + 'list' + WHITE + '>                                   ' +\
-      RED + '# Lists all '+GREEN+'programming '+YELLOW+'lines'+RED+' in memory',
-   '<' + GREEN + 'list' + WHITE + '><' + YELLOW + "vars" + WHITE + ">                             "+\
-      RED + '# Lists all '+GREEN+'variables '+RED+' in memory',
-   '<' + GREEN + 'list' + WHITE + '><' + YELLOW + "ext" + WHITE + ">                              "+\
-      RED + '# Lists all '+GREEN+'current extension or plugin\'s '+YELLOW+'currently'+RED+' existing in memory',
+      RED + '# Lists all ' + GREEN + 'programming ' + YELLOW + 'lines' + RED + ' in memory',
+   '<' + GREEN + 'list' + WHITE + '><' + YELLOW + "vars" + WHITE + ">                             " + \
+      RED + '# Lists all ' + GREEN + 'variables ' + RED + ' in memory',
+   '<' + GREEN + 'list' + WHITE + '><' + YELLOW + "ext" + WHITE + ">                              " + \
+      RED + '# Lists all ' + GREEN + 'current extension or plugin\'s ' + YELLOW + 'currently' + RED + ' existing in memory',
    '  ',  
-   '<' + GREEN + 'program save' + WHITE +'> <'+YELLOW+'Name'+ WHITE+'><' + GREEN + '.' + WHITE + '><' + YELLOW + \
-      'Extension' + WHITE+ '>      ' + \
-      RED+'# Where '+YELLOW+'Name'+GREEN+'.' + YELLOW + 'Extension' + RED + ' is the ' + YELLOW + 'File Name' + RED + ' that program in memory',
-   '                                         ' + RED + '# will be saved to',
-   '  ',
-   '<' + GREEN + 'program load' + WHITE +'> <' + YELLOW + 'Name' + WHITE + '><' + GREEN + '.' + WHITE + '><' + YELLOW + \
-      'Extension' + WHITE+ '>      '+\
-      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a ' + YELLOW + 'File Name' + RED + ' that program',
-   '                                         '+RED+'# code will be loaded from',
-   '  ',
    '<' + GREEN + 'run' + WHITE +'>                                    '+\
       RED+'# Runs the program currently in memory',
-   '<' + GREEN + 'run' + WHITE +'> <'+YELLOW+'Name'+ WHITE+'><'+GREEN+'.'+WHITE+'><'+YELLOW+\
+   '<' + GREEN + 'run' + WHITE + '> <' + YELLOW + 'Name' + WHITE + '><' + GREEN + '.' + WHITE + '><' + YELLOW + \
    'Extension' + WHITE+ '>               '+\
-      RED + '# Where '+YELLOW+'Name'+GREEN+'.'+YELLOW+'Extension'+RED+' is a',
-   '                                         '+RED+'# '+YELLOW+'File Name'+RED+' that program',
-   '                                         '+RED+'# code will be loaded into',   
-   '                                         '+RED+'# memory from and then executed',
+      RED + '# Where ' + YELLOW + 'Name' + GREEN + '.' + YELLOW + 'Extension' + RED + ' is a ' + YELLOW + 'File Name' + RED + ' that contains program code',
+  RED + '                                         # to be loaded into memory.',
    '                                                            ',
-   'help                                     ' + RED +\
-      '# Print this help list',
-   '?                                        ' + RED +\
-      '# Print this help list',
+   'wait <' + GREEN + 'time' + WHITE + '>                              ' + \
+      RED + '# Delay <' + GREEN + 'time' + RED + '> before executing the next line of code or delaying the next user input',
+  '  ',
+  '<' + GREEN + 'var' + WHITE +'> = <' + GREEN + 'value' + WHITE + '>                          ' + RED + '# Set variable <' + GREEN + 'var' + RED + '> to <' + GREEN + 'value' + RED + '>',
+  '<' + GREEN + 'var' + WHITE +'> = <' + GREEN + 'expression' + WHITE + '>                     ' + RED + '# Set variable <' + GREEN + 'var' + RED + '> to the results of evaluating <' + GREEN + 'expression' + RED + '>',
+  '  ',  
+  '<' + GREEN + 'ren' + WHITE +'>                                    ' + RED + '# Renumber all of the lines of the current program which is in memory',
+  '  ',  
+   '?                                        ' + RED + '# Print this help list',
    '                                                            ',
-   'quit                                     ' + RED +\
-      '# Quit/Exit program',
-   '!                                        ' + RED +\
-      '# Quit/Exit program',
+   'quit                                     ' + RED + '# Quit/Exit program',
+   '!                                        ' + RED + '# Quit/Exit program',
    YELLOW + '---------------------------------------------------------------------------', 
    ' ']
 

@@ -1,6 +1,7 @@
 import platform
-import sys
 Platform = platform.system()
+
+import sys
 if ('CYGWIN_NT' in Platform): # type: ignore
     sys.path.append('/usr/local/Lib/Python')
     from msPrompt import KeyboardPrompt # type: ignore
@@ -14,9 +15,11 @@ elif ('Linux' in Platform): # type: ignore
 from sly import Lexer
 from Colorizer import Colorizer # type: ignore
 
-# =============================================================================
-# MEtaDaTA
-# =============================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "0.2.0"
 __status__ = "Development"
@@ -32,6 +35,7 @@ class Tokenize(Lexer):
         SUB_ASGN, # type: ignore
         MUL_ASGN, # type: ignore
         DIV_ASGN, # type: ignore
+        SYMBOLIC, # type: ignore
         EQ, # type: ignore
         NEQ, # type: ignore
         LEQ, # type: ignore
@@ -58,7 +62,7 @@ class Tokenize(Lexer):
         ALPHA_NUMERIC, # type: ignore
         COLOR, # type: ignore
         STRING, # type: ignore
-        EXTENTION, # type: ignore
+        EXTENSION, # type: ignore
         EXT, # type: ignore
         INFO, # type: ignore
         CLEAR, # type: ignore
@@ -69,7 +73,6 @@ class Tokenize(Lexer):
         SAVE, # type: ignore
         LOAD, # type: ignore
         VARS, # type: ignore
-#        EXTENTIONS, # type: ignore
         SOLVE, # type: ignore
         DOUBLEDOT, # type: ignore
         DOT, # type: ignore
@@ -86,6 +89,7 @@ class Tokenize(Lexer):
         LOG,  # type: ignore
         LOG2,  # type: ignore
         LN,   # type: ignore
+        #DQUOTE, # type: ignore
         DIR,  # type: ignore
         LS,  # type: ignore
         PWD,  # type: ignore
@@ -97,6 +101,7 @@ class Tokenize(Lexer):
         REM, # type: ignore
         REN, # type: ignore
         NEW, # type: ignore
+        QUOTED_STR, # type: ignore
     #    NEXT,
         RUN,         # type: ignore
         HEX_NUM, # type: ignore
@@ -111,7 +116,7 @@ class Tokenize(Lexer):
 
     # Tokens -  Reserved Words
     PRINT     = r'print|Print|PRINT'
-    EXTENTION = r'Extention|extention'
+    EXTENSION = r'Extension|extension'
     #IF       = r'if|IF'
     #THEN     = r'then|THEN'
     #ELSE     = r'else|ELSE'
@@ -120,7 +125,8 @@ class Tokenize(Lexer):
     #TO       = r'to|TO'
     #NEXT     = r'next|NEXT'
     # Build In Functions or Immediate
-    EXT       =r'ext|Ext|EXT'
+    EXT       = r'ext|Ext|EXT'
+    SYMBOLIC  = r'symbolic|Symbolic|sym|Sym'
     INFO      = r'Info|info|INFO'
     NEW       = r'new|NEW'
     SOLVE     = r'solve|SOLVE'
@@ -135,7 +141,7 @@ class Tokenize(Lexer):
     NOW       = r'Now|NOW|now'
     PROGRAM   = r'program|PROGRAM'
     EXIT      = r'exit|EXIT|quit|QUIT'
-    REN       = r'ren|REN'# Renumber
+    REN       = r'ren|REN' # Renumber
     RUN       = r'run|RUN'
     SAVE      = r'save|SAVE'
     VARS      = r'vars|VARS'
@@ -148,6 +154,7 @@ class Tokenize(Lexer):
     LOG       = r'log|LOG'
     LN        = r'ln|LN'
     DOUBLEDOT = r"\.\."
+    #DQUOTE    = r"\""
     DOT       = r"\."
 
     @_(r'^\d{0,3}\ REM .*')  # type: ignore
@@ -319,6 +326,10 @@ class Tokenize(Lexer):
     # Alphabet character or string
     @_(r'[a-zA-Z]|[a-zA-Z][a-zA-Z]')  # type: ignore
     def LETTER(self, t):
+        return t
+
+    @_(r'\"[a-zA-Z0-9_\+\-\*/\&\|~^%!]+\"')
+    def QUOTED_STR(self, t):
         return t
 
     def error(self, t):

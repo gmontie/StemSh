@@ -42,9 +42,11 @@ STRT=3
 TO_=4
 END=5
 
-# ===============================================================================================
-# MEtADAtA
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "1.0.0"
 __status__ = "Development"
@@ -92,20 +94,15 @@ class AST(object):
             Rslt = Tree.Value
             Results = Rslt
         elif TreeType=='BuiltIn':
-            #print(self.ExtDir.keys())
             Extention = self.Extentions.Which(Tree.Value) # Lookup
-            #Value = self.ExtDir[ Extention ]
-            #print(type(Value).__name__)
-            #print(Value)
             args = None
-            #Extention = self.Extentions.Which(TreeType) # Lookup
             Results = self.ExtDir[ Extention ][Tree.Value](args)
-            #Results = self.ExtDir[ Tree.Value ]()
         elif TreeType == 'FnDecl':
             Rslt = False
             Fn = Tree.Value
             FnType = Fn['Type']
-            print(FnType)
+            #cprint(RED,"In Function Declaration")
+            #print(FnType)
             if FnType == 'Declaration' and self.CheckFuntion(Fn):
                 Rslt = Fn                
             Results = Rslt
@@ -114,7 +111,6 @@ class AST(object):
             Lst2 = ValRt.getList
             Vars = dict(zip(Lst1, Lst2))
             Results = self.Func(Vars, ValLf['Body'], Depth=0)
-            #print ("Results: ", Results)
         elif TreeType=='STRING':
             Rslt = Tree.Value
             Results =  Rslt
@@ -127,7 +123,6 @@ class AST(object):
                 self.Print(ValRt)
                 self.Print(Tree.Value)
                 self.print("Not completely Implemented")
-                #Rslt = np.linalg.solve( np.array(self.Vars.Value( Tokens[2].value)), np.array(self.Vars.Value( Tokens[4].value))))
         elif TreeType=='VAR':
             if self.Vars.VariableNotDefined(Tree.Value):
                 self.Vars.Set(Tree.Value, 0)
@@ -329,8 +324,12 @@ class AST(object):
     def getPrintLine(self, Queue):
         Line = " "
         if type(Queue).__name__ != "Queue":
-            print("AST 338 Queue: ",type(Queue).__name__)
-            print("AST 338 Queue: ",Queue)
+            if(Queue[0] == 'ArgsListStatement'):
+                if(self.Vars.VariableDefined(Queue[1])):
+                       print(self.Vars.Value(Queue[1]))
+            else:
+                print("AST 337 Queue: ",type(Queue).__name__)
+                print("AST 337 Queue: ",Queue)
         else:
             Lst = Queue.getList
             Line = " "

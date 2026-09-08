@@ -16,9 +16,11 @@ elif ('Linux' in Platform): # type: ignore
 
 from COLORS import RED, GREEN, YELLOW, WHITE # type: ignore
 
-# ===============================================================================================
-# MEtADAtA
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "1.0.0"
 __status__ = "Development"
@@ -39,7 +41,7 @@ HelpLines= \
    'CD <' + GREEN + 'Path' + WHITE + '>             ' + \
       RED + '# Change Directory <' + GREEN + 'Path' + RED + '> to new location ',
    'File Sys Clear ' + '       ' + \
-      RED + '# Reset the File Extentions internals  ',
+      RED + '# Reset the File Extensions internals  ',
    'DIR                   ' + \
       RED + '# Output the ' + GREEN + 'Directory listing ' + RED + 'to terminal ',
    'LS                    ' + \

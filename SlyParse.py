@@ -30,9 +30,11 @@ from Stack import Stack
 from COLORS import BOLD, RESET, WHITE, RED, YELLOW, BLUE, GREEN, CYAN, MAGENTA  # type: ignore
 from Colorizer import Colorizer # type: ignore
 
-# ===============================================================================================
-# MEtADAtA
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "1.0.0"
 __status__ = "Development"
@@ -51,6 +53,7 @@ isColor = Colorizer().isColor
 class theParser(Parser):
     debugfile = 'parser.out'
     tokens = Tokenize.tokens
+    sp.init_printing()
 
     precedence = (
             ('left', 'ADD_OP', 'SUB_OP'),
@@ -68,9 +71,10 @@ class theParser(Parser):
     #                                                                         #
     # ========================================================================#
     #def __init__(self, Prmt=None, Vars=None, args=None, **kwargs):
-    def __init__(self, Vars=None, args=None, **kwargs):
+    def __init__(self, Vars=None, args=None, Symbolic=None, **kwargs):
         super().__init__()
         self.pArgs=args
+        self.Symbolic=Symbolic if Symbolic is not None else {}
         self.Vars=Vars
         self.Lines=[]
         self.PArgs=[]
@@ -148,7 +152,7 @@ class theParser(Parser):
        'Line')
     def TOP_LEVEL(self, p):
         Results = None
-        # self.unrollP(p)
+        self.unrollP(p,"TOP_LEVEL")
         if type(p[0]).__name__ == 'BTree':
             Results = p[0]
         elif type(p[0]).__name__ == 'list':
@@ -218,7 +222,7 @@ class theParser(Parser):
         #self.unrollP(p)
         return ["SaveProgram", p[2]]
 
-    @_('EXTENTION LOAD ALPHA_NUMERIC') # type: ignore
+    @_('EXTENSION LOAD ALPHA_NUMERIC') # type: ignore
     def loadExtention(self, p):
         self.unrollP(p)
         return ["LoadExtention", p[2]]
@@ -234,7 +238,7 @@ class theParser(Parser):
 
     @_('LIST EXT') # type: ignore
     def List_Extentions(self, p):
-        return "LIST_EXTENTIONS"
+        return "LIST_EXTENSIONS"
 
     @_('LIST ALPHA_NUMERIC') # type: ignore
     def List_BuiltIn(self, p):
@@ -437,6 +441,31 @@ class theParser(Parser):
         Tree.right = BTree('VAL', Fn[1])
         return "BTree", Tree
 
+    @_('Symbolic') # type: ignore
+    def Statement(self, p):
+         Msg = addStr(BOLD, RED, "Symbolic",WHITE," <-- ",YELLOW,"Symbolic --> Statement")
+         self.unrollP(p, Msg)
+         return p[0]
+
+    # NOTE: Adding Sympy to the interpreter 
+    ## Initialize the sympy printing functionality
+    #  sp.init_printing()
+    ## Define symbols this sympy way
+    #  x,y,z=sp.symbols('x,y,z')
+    ## Declare a function 
+    #  g=x**2+y**2+z**2
+    ## Pretty Print the function g
+    #  sp.pprint(g)
+    # cprint(BOLD,YELLOW,'----------------------------------',RESET)
+    @_('SYMBOLIC Variable ASSIGN QUOTED_STR',
+       'SYMBOLIC Variable ASSIGN STRING') # type: ignore
+    def Symbolic(self, p):
+         Msg = addStr(BOLD, RED, "Symbolic",WHITE," <-- ",YELLOW,"Symbolic")
+         self.unrollP(p, Msg)
+         #self.Symbolic[ p[1] ]=p[3]
+         #p[0] = ("Symbolic", p[1], p[3])
+         return ("Symbolic", p[1], p[3])
+        
     @_('Variable ( ArgsList )')  # type: ignore
     def FnCall(self, p):
         # Msg = addStr(BOLD, RED, "FnCall",WHITE,"<--",YELLOW,"Variable ( ArgsList )")

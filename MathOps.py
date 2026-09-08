@@ -12,7 +12,7 @@ elif ('Windows' in Platform):
 elif ('Linux' in Platform):
     sys.path.append('/usr/local/Lib/Python')
 
-from Extentions import Extention
+from Extensions import Extension
 from math import factorial
 from math import log10
 from math import log2
@@ -28,9 +28,11 @@ import math as math
 from COLORS import WHITE, RED, YELLOW, BOLD, BLUE, GREEN, CYAN, MAGENTA, BLACK   # type: ignore
 from Colorizer import Colorizer # type: ignore
 
-# ===============================================================================================
-# MEtADAtA
-# ===============================================================================================
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+#│▒                                                                              ▒│
+#│▒          MetAdATa                                                            ▒│
+#│▒                                                                              ▒│
+#│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
 __author__ = "Greg Montgomery"
 __version__ = "1.0.0"
 __status__ = "Development"
@@ -44,12 +46,11 @@ __status__ = "Development"
 """
 
 cprint = Colorizer().cprint
-#addStr = Colorizer().addStr
 
 #*****************************************************************************
 # The Execute the actions encoded by the Binary Tree
 #*****************************************************************************
-class MathOps(Extention):
+class MathOps(Extension):
     def __init__(cls, 
                  Name="MathOps", 
                  Version=__version__, 
