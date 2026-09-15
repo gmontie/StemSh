@@ -88,7 +88,7 @@ class ExecuteUnit:
                'NOW':self.Now,
                'TIME_NOW':self.TimeNow,
                "LIST_VARS":self.Vars.List,
-               'LIST_EXTENTIONS':self.Extensions.ListExtensions,
+               'LIST_EXTENSIONS':self.Extensions.ListExtensions,
                'LIST':self.programList,
                'LoadProgram':self.LoadProgram,
                'SaveProgram':self.SaveProgram,
